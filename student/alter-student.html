@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Edit or Delete Student Details</title>
+
+  <!-- Bootstrap 5 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
+
+  <style>
+    body {
+      background-color: #121212;
+      color: #fff;
+    }
+    .container {
+      max-width: 600px;
+      margin-top: 60px;
+      background-color: #1e1e1e;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.6);
+    }
+    .form-control {
+      background-color: #2c2c2c;
+      border: 1px solid #444;
+      color: #fff;
+    }
+    .form-control::placeholder {
+      color: #aaa;
+    }
+    .btn-update {
+      background-color: #0d6efd;
+      color: #fff;
+      width: 100%;
+    }
+    .btn-delete {
+      background-color: #dc3545;
+      color: #fff;
+      width: 100%;
+    }
+  </style>
+
+  <script>
+    function validateForm() {
+      var marks = parseFloat(document.getElementById("update-marks").value);
+      if (marks < 0.00 || marks > 10.00) {
+        alert("Marks should be between 0 and 10.");
+        return false;
+      }
+      return true;
+    }
+
+    function confirmDeletion() {
+      return confirm("Are you sure you want to delete this student's data?");
+    }
+  </script>
+</head>
+<body>
+  <div class="container">
+    <h2 class="text-center mb-4">Edit Student Details</h2>
+    <form action="/update-student" method="POST" onsubmit="return validateForm()">
+      <div class="mb-3">
+        <label for="update-username" class="form-label">Username</label>
+        <input type="text" id="update-username" name="username" class="form-control" required>
+      </div>
+      <div class="mb-3">
+        <label for="update-name" class="form-label">Student Name</label>
+        <input type="text" id="update-name" name="student-name" class="form-control">
+      </div>
+      <div class="mb-3">
+        <label for="update-password" class="form-label">Password</label>
+        <input type="password" id="update-password" name="password" class="form-control">
+      </div>
+      <div class="mb-3">
+        <label for="update-class" class="form-label">Class</label>
+        <input type="text" id="update-class" name="class" class="form-control">
+      </div>
+      <div class="mb-4">
+        <label for="update-marks" class="form-label">Marks (0 - 10)</label>
+        <input type="number" id="update-marks" name="marks" step="0.01" min="0" max="10" class="form-control">
+      </div>
+      <button type="submit" class="btn btn-update">Update Details</button>
+    </form>
+
+    <hr class="my-4 text-secondary"/>
+
+    <h2 class="text-center mb-4">Delete Student</h2>
+    <form action="/delete-student" method="POST" onsubmit="return confirmDeletion()">
+      <div class="mb-3">
+        <label for="delete-username" class="form-label">Username</label>
+        <input type="text" id="delete-username" name="username" class="form-control" required>
+      </div>
+      <button type="submit" class="btn btn-delete">Delete Student</button>
+    </form>
+  </div>
+</body>
+</html>

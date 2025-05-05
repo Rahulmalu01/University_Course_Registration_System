@@ -1,0 +1,50 @@
+[
+  {
+    "id": "101",
+    "name": "Cloud Computing",
+    "description": "Define cloud computing and explain essential characteristics, history, the business case for cloud, and the emerging technologies enabled by cloud",
+    "duration": "15 weeks"
+  },
+  {
+    "id": "102",
+    "name": "Block Chain",
+    "description": "Is designed to provide students with a comprehensive understanding of blockchain technology, its underlying principles, and its applications across various industries",
+    "duration": "13 weeks"
+  },
+  {
+    "id": "103",
+    "name": "Artificial Intellegance",
+    "description": "introduce the fundamental concepts of artificial intelligence(AI) to individtuals from all academic backgrounds. Participants will develop a broad understanding of AI technologies, their implications, and their potential applications in various fields.",
+    "duration": "14 weeks"
+  },
+  {
+    "id": "104",
+    "name": "Cyber Security",
+    "description": "Learn the essentials of cyber security and build your skills to better protect your digital information from security threats.",
+    "duration": "14 weeks"
+  },
+  {
+    "id": "105",
+    "name": "DSA EDIT",
+    "description": "TEST",
+    "duration": "2"
+  },
+  {
+    "id": "106",
+    "name": "DBMS",
+    "description": "Database Management System using MySQL",
+    "duration": "14 weeks"
+  },
+  {
+    "id": "107",
+    "name": "Web development",
+    "description": "Learn HTML, CSS and JavaScript from basic to advance",
+    "duration": "10 weeks"
+  },
+  {
+    "id": "108",
+    "name": "Fundamentals of AI",
+    "description": "create the fundamentals of artificial intelligence",
+    "duration": "3 weeks"
+  }
+]

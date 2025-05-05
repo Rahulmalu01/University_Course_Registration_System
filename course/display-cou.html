@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Course Selection</title>
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
+
+  <style>
+    body {
+      background-color: #121212;
+      color: #ffffff;
+    }
+    .btn-custom {
+      background-color: #343a40;
+      color: white;
+    }
+    .btn-custom:hover {
+      background-color: #495057;
+    }
+    .table-dark-custom th, .table-dark-custom td {
+      background-color: #1e1e1e;
+      color: white;
+    }
+    .pagination-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="container py-5">
+    <!-- Action Buttons -->
+    <div class="d-grid gap-3 mb-4">
+      <form action="/add-course" method="GET">
+        <button class="btn btn-custom w-100" id="add-course">ADD COURSES</button>
+      </form>
+      <form action="/alter-course" method="GET">
+        <button class="btn btn-custom w-100" id="alter-course">ALTER COURSES</button>
+      </form>
+    </div>
+
+    <!-- Course Table -->
+    <h2 class="text-center mb-4">Course Selection</h2>
+    <div class="table-responsive">
+      <table class="table table-bordered table-dark table-striped table-dark-custom text-center" id="courseTable">
+        <thead>
+          <tr>
+            <th>Course ID</th>
+            <th>Course Name</th>
+            <th>Course Description</th>
+            <th>Duration</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Table rows will be dynamically populated -->
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Pagination -->
+    <div class="pagination-buttons my-4">
+      <button class="btn btn-secondary" id="prevBtn" disabled>Previous</button>
+      <button class="btn btn-secondary" id="nextBtn">Next</button>
+    </div>
+  </div>
+
+  <script>
+    let courses = [];
+    const rowsPerPage = 5;
+    let currentPage = 1;
+
+    async function fetchCourses() {
+      const response = await fetch('/courses');
+      courses = await response.json();
+      displayPage(currentPage);
+    }
+
+    function displayPage(page) {
+      const tableBody = document.querySelector('#courseTable tbody');
+      tableBody.innerHTML = '';
+
+      const startIndex = (page - 1) * rowsPerPage;
+      const endIndex = Math.min(startIndex + rowsPerPage, courses.length);
+
+      for (let i = startIndex; i < endIndex; i++) {
+        const course = courses[i];
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td>${course.id}</td>
+          <td>${course.name}</td>
+          <td>${course.description}</td>
+          <td>${course.duration}</td>
+        `;
+        tableBody.appendChild(row);
+      }
+
+      updatePaginationButtons();
+    }
+
+    function updatePaginationButtons() {
+      document.getElementById('prevBtn').disabled = currentPage === 1;
+      document.getElementById('nextBtn').disabled = currentPage * rowsPerPage >= courses.length;
+    }
+
+    document.getElementById('prevBtn').addEventListener('click', () => {
+      if (currentPage > 1) {
+        currentPage--;
+        displayPage(currentPage);
+      }
+    });
+
+    document.getElementById('nextBtn').addEventListener('click', () => {
+      if (currentPage * rowsPerPage < courses.length) {
+        currentPage++;
+        displayPage(currentPage);
+      }
+    });
+
+    document.addEventListener('DOMContentLoaded', fetchCourses);
+  </script>
+</body>
+</html>
