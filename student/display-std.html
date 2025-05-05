@@ -8,30 +8,93 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
     <style>
         body {
-            background-color: #f8f9fa;
+            background-color: #121212;
+            color: #e0e0e0;
+            font-family: Arial, sans-serif;
         }
         .container {
             max-width: 900px;
             margin-top: 50px;
-            background-color: white;
+            background-color: #1e1e1e;
             padding: 30px;
             border-radius: 12px;
-            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            box-shadow: 0 0 20px rgba(0,0,0,0.3);
         }
-        .button-container {
+        h1 {
+            color: #ffffff;
             margin-bottom: 20px;
+            font-size: 2rem;
         }
-        button {
-            margin-top: 10px;
+        .button-container form button {
+            margin-top: 15px;
+            border-radius: 8px;
+            padding: 12px;
+            font-size: 16px;
         }
         #fetchData {
             width: 100%;
             background-color: #007bff;
             color: white;
             border: none;
-            padding: 10px;
+            padding: 12px;
             font-size: 16px;
             border-radius: 8px;
+        }
+        #fetchData:hover {
+            background-color: #0056b3;
+        }
+        .table {
+            background-color: #2c2c2c;
+            color: #ffffff;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .table th, .table td {
+            color: #ffffff;
+            padding: 12px;
+            text-align: center;
+        }
+        .table-striped tbody tr:nth-of-type(odd) {
+            background-color: #333;
+        }
+        .table th {
+            background-color: #444;
+        }
+        .table td {
+            background-color: #555;
+        }
+        .btn-custom {
+            width: 100%;
+            border-radius: 8px;
+            padding: 12px;
+            font-size: 16px;
+        }
+        .btn-success {
+            background-color: #28a745;
+            border-radius: 8px;
+        }
+        .btn-success:hover {
+            background-color: #218838;
+        }
+        .btn-warning {
+            background-color: #ffc107;
+            border-radius: 8px;
+        }
+        .btn-warning:hover {
+            background-color: #e0a800;
+        }
+        .btn-primary {
+            background-color: #007bff;
+        }
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+        /* Adding spacing between elements */
+        .button-container {
+            margin-bottom: 20px;
+        }
+        .table-responsive {
+            margin-top: 20px;
         }
     </style>
 </head>
@@ -40,34 +103,37 @@
         <h1 class="text-center mb-4">Student Information</h1>
         <div class="button-container">
             <form action="/add-student" method="GET">
-                <button class="btn btn-success" id="add-students" style="width: 100%;">Add Students</button>
+                <button class="btn btn-success btn-custom">Add Students</button>
             </form>
             <form action="/alter-student" method="GET">
-                <button class="btn btn-warning" id="alter-student" style="width: 100%;">Alter Students</button>
+                <button class="btn btn-warning btn-custom">Alter Students</button>
             </form>
         </div>
-        <button id="fetchData" class="btn btn-primary mb-4">Fetch Student Data</button>
-        <table id="studentTable" class="table table-striped">
-            <thead>
-                <tr>
-                    <th>Student Name</th>
-                    <th>Username</th>
-                    <th>Class</th>
-                    <th>Marks</th>
-                </tr>
-            </thead>
-            <tbody>
-                <!-- Student rows will be dynamically inserted here -->
-            </tbody>
-        </table>
+        <div class="table-responsive">
+            <table id="studentTable" class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Student Name</th>
+                        <th>Username</th>
+                        <th>Class</th>
+                        <th>Marks</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Student rows will be dynamically inserted here -->
+                </tbody>
+            </table>
+        </div>
     </div>
 
     <script>
-        document.getElementById('fetchData').addEventListener('click', async () => {
+        // Automatically load student data when the page loads
+        window.addEventListener('DOMContentLoaded', async () => {
             const response = await fetch('/display-students');
             const students = await response.json();
             const tableBody = document.querySelector('#studentTable tbody');
-            tableBody.innerHTML = '';
+            tableBody.innerHTML = ''; // Clear any existing data
+
             students.forEach(student => {
                 const row = `
                     <tr>

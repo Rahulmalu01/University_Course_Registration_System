@@ -24,11 +24,6 @@
       background-color: #1e1e1e;
       color: white;
     }
-    .pagination-buttons {
-      display: flex;
-      justify-content: center;
-      gap: 1rem;
-    }
   </style>
 </head>
 <body>
@@ -60,34 +55,22 @@
         </tbody>
       </table>
     </div>
-
-    <!-- Pagination -->
-    <div class="pagination-buttons my-4">
-      <button class="btn btn-secondary" id="prevBtn" disabled>Previous</button>
-      <button class="btn btn-secondary" id="nextBtn">Next</button>
-    </div>
   </div>
 
   <script>
     let courses = [];
-    const rowsPerPage = 5;
-    let currentPage = 1;
 
     async function fetchCourses() {
       const response = await fetch('/courses');
       courses = await response.json();
-      displayPage(currentPage);
+      displayCourses();
     }
 
-    function displayPage(page) {
+    function displayCourses() {
       const tableBody = document.querySelector('#courseTable tbody');
       tableBody.innerHTML = '';
 
-      const startIndex = (page - 1) * rowsPerPage;
-      const endIndex = Math.min(startIndex + rowsPerPage, courses.length);
-
-      for (let i = startIndex; i < endIndex; i++) {
-        const course = courses[i];
+      courses.forEach(course => {
         const row = document.createElement('tr');
         row.innerHTML = `
           <td>${course.id}</td>
@@ -96,29 +79,8 @@
           <td>${course.duration}</td>
         `;
         tableBody.appendChild(row);
-      }
-
-      updatePaginationButtons();
+      });
     }
-
-    function updatePaginationButtons() {
-      document.getElementById('prevBtn').disabled = currentPage === 1;
-      document.getElementById('nextBtn').disabled = currentPage * rowsPerPage >= courses.length;
-    }
-
-    document.getElementById('prevBtn').addEventListener('click', () => {
-      if (currentPage > 1) {
-        currentPage--;
-        displayPage(currentPage);
-      }
-    });
-
-    document.getElementById('nextBtn').addEventListener('click', () => {
-      if (currentPage * rowsPerPage < courses.length) {
-        currentPage++;
-        displayPage(currentPage);
-      }
-    });
 
     document.addEventListener('DOMContentLoaded', fetchCourses);
   </script>
