@@ -8,8 +8,10 @@
     "express-session": "^1.18.1",
     "fs": "^0.0.1-security",
     "mysql": "^2.18.1",
+    "mysql2": "^3.14.1",
     "path": "^0.12.7",
     "simple-update-notifier": "^2.0.0",
+    "sqlite3": "^5.1.7",
     "sqlstring": "^2.3.1",
     "statuses": "^2.0.1",
     "string_decoder": "^1.1.1",
@@ -40,6 +42,5 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "devDependencies": {},
   "description": ""
 }
